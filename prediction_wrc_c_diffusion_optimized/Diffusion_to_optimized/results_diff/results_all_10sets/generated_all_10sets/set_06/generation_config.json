@@ -1,0 +1,31 @@
+{
+  "set_id": 6,
+  "set_seed": 42,
+  "checkpoint": "/data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/checkpoints/gen_all.pt",
+  "state_key": "ema_state_dict",
+  "seq_len": 80,
+  "num_classes": 5,
+  "timesteps": 50,
+  "beta_end": 0.2,
+  "labels": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "num_per_label": 2000,
+  "batch_size": 128,
+  "cond_weight": 1.0,
+  "base_seed": 42,
+  "num_generation_sets": 10,
+  "seed_mode": "same initial seed only once; no per-set reseeding",
+  "nucleotides": [
+    "A",
+    "C",
+    "G",
+    "T"
+  ],
+  "method": "Enhanced structure prior with training innovations: base preference + importance map, time/label-aware 4-layer Prior Transformer, mid-only weak-gated cross-attention, position-weighted denoising loss, adjacent competitive denoising loss.",
+  "main_output_format": "CSV with only one column: sequence"
+}

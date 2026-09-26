@@ -1,0 +1,174 @@
+========================================================================================================================
+Final 10-Set Evaluation Report: Mean ± Std
+========================================================================================================================
+Generated root dir : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule
+Predictor model    : DNABERT2/mlp1_dataCGR_eval_zhou_unet_epoch100
+Number of sets     : 10
+SAMPLE_SIZE        : 2000
+LEV_PAIRS          : 1000
+BIO_PAIRS          : 500
+========================================================================================================================
+
+[Set List]
+   01. set_01 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_01
+   02. set_02 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_02
+   03. set_03 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_03
+   04. set_04 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_04
+   05. set_05 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_05
+   06. set_06 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_06
+   07. set_07 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_07
+   08. set_08 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_08
+   09. set_09 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_09
+   10. set_10 -> /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/set_10
+
+========================================================================================================================
+[Metric 1: Basic Sequence Quality]
+========================================================================================================================
+   • GC Diff                 : 0.0121 ± 0.0004 (Var=0.000000, N=10)       ✅  <0.05 is good
+   • Diversity               : 1.0000 ± 0.0000 (Var=0.000000, N=10)       ✅  >0.99 is good
+   • Novelty                 : 1.0000 ± 0.0000 (Var=0.000000, N=10)       ✅  higher is better
+
+========================================================================================================================
+[Metric 2: Global Similarity Gen vs Nat]
+========================================================================================================================
+   • Edit Distance           : 45.25 ± 0.02 (Var=0.000534, N=10)          ✅  lower means closer to natural
+   • Bio Alignment           : 887.74% ± 4.23% (Var=0.001792, N=10)       ✅  higher means closer to natural
+
+========================================================================================================================
+[Metric 3: Local Motif Similarity Avg PCC]
+========================================================================================================================
+   • 4-mer PCC               : 0.9909 ± 0.0005 (Var=0.000000, N=10)       ✅  target >0.90
+   • 5-mer PCC               : 0.9853 ± 0.0007 (Var=0.000000, N=10)       ✅  target >0.90
+   • 6-mer PCC               : 0.9676 ± 0.0009 (Var=0.000001, N=10)       ✅  target >0.90
+
+========================================================================================================================
+[Metric 4: Label Controllability by DNABERT2/mlp1_dataCGR_eval_zhou_unet_epoch100]
+========================================================================================================================
+   • Avg Acc                 : 92.52% ± 0.28% (Var=0.000008, N=10)        ✅  higher is better
+   • Avg MAE                 : 0.0773 ± 0.0032 (Var=0.000010, N=10)       ✅  lower is better
+   • Corr target-mean_pred   : 0.9999 ± 0.0000 (Var=0.000000, N=10)       ✅  higher is better
+
+========================================================================================================================
+[Per-Set Overview]
+========================================================================================================================
+Set        |     AvgAcc |     AvgMAE |     GCdiff |      K4PCC |      K5PCC |      K6PCC |   BioInter
+------------------------------------------------------------------------------------------------------------------------
+set_01     |     92.57% |     0.0764 |     0.0126 |     0.9910 |     0.9854 |     0.9678 |      8.92%
+set_02     |     92.92% |     0.0731 |     0.0118 |     0.9907 |     0.9849 |     0.9673 |      8.94%
+set_03     |     92.39% |     0.0784 |     0.0119 |     0.9914 |     0.9858 |     0.9680 |      8.91%
+set_04     |     92.32% |     0.0794 |     0.0129 |     0.9916 |     0.9858 |     0.9683 |      8.86%
+set_05     |     92.85% |     0.0737 |     0.0117 |     0.9920 |     0.9867 |     0.9693 |      8.87%
+set_06     |     92.24% |     0.0799 |     0.0122 |     0.9907 |     0.9852 |     0.9671 |      8.89%
+set_07     |     92.26% |     0.0804 |     0.0119 |     0.9905 |     0.9851 |     0.9677 |      8.80%
+set_08     |     92.89% |     0.0727 |     0.0121 |     0.9905 |     0.9847 |     0.9666 |      8.88%
+set_09     |     92.55% |     0.0777 |     0.0117 |     0.9905 |     0.9850 |     0.9674 |      8.89%
+set_10     |     92.25% |     0.0814 |     0.0118 |     0.9904 |     0.9844 |     0.9662 |      8.82%
+
+========================================================================================================================
+[Best / Worst Set]
+========================================================================================================================
+   Best Acc Set  : set_02 | AvgAcc=92.92% | MAE=0.0731 | K6=0.9673 | GCdiff=0.0118
+   Worst Acc Set : set_06 | AvgAcc=92.24% | MAE=0.0799 | K6=0.9671 | GCdiff=0.0122
+   Best K6 Set   : set_05 | K6=0.9693 | AvgAcc=92.85% | GCdiff=0.0117
+   Worst K6 Set  : set_10 | K6=0.9662 | AvgAcc=92.25% | GCdiff=0.0118
+
+========================================================================================================================
+[Per-Class Summary Across Sets]
+========================================================================================================================
+Class    |           Acc mean±std |           MAE mean±std |        GCdiff mean±std |         K6PCC mean±std |      BioInter mean±std
+------------------------------------------------------------------------------------------------------------------------
+Class_0  |         99.64% ± 0.11% |        0.0039 ± 0.0012 |        0.0074 ± 0.0004 |        0.9438 ± 0.0033 |          8.64% ± 0.04%
+Class_1  |         86.95% ± 0.79% |        0.1358 ± 0.0092 |        0.0120 ± 0.0007 |        0.9653 ± 0.0010 |          8.64% ± 0.06%
+Class_2  |         86.29% ± 0.75% |        0.1401 ± 0.0076 |        0.0157 ± 0.0008 |        0.9733 ± 0.0012 |          8.75% ± 0.09%
+Class_3  |         91.00% ± 0.73% |        0.0901 ± 0.0072 |        0.0128 ± 0.0008 |        0.9730 ± 0.0021 |          8.94% ± 0.08%
+Class_4  |         98.73% ± 0.19% |        0.0168 ± 0.0032 |        0.0124 ± 0.0007 |        0.9824 ± 0.0019 |          9.42% ± 0.12%
+
+========================================================================================================================
+[Per-Class Detailed Metrics]
+========================================================================================================================
+
+------------------------------------------------------------------------------------------------------------------------
+Class_0
+------------------------------------------------------------------------------------------------------------------------
+   • Acc                 : 99.64% ± 0.11% (Var=0.000001, N=10)
+   • MAE                 : 0.0039 ± 0.0012 (Var=0.000002, N=10)
+   • MeanPred            : 0.0039 ± 0.0012 (Var=0.000002, N=10)
+   • GC Diff             : 0.0074 ± 0.0004 (Var=0.000000, N=10)
+   • Diversity           : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Novelty             : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Edit Distance       : 43.68 ± 0.06 (Var=0.003441, N=10)
+   • Bio Alignment       : 863.86% ± 3.71% (Var=0.001376, N=10)
+   • 4-mer PCC           : 0.9832 ± 0.0018 (Var=0.000003, N=10)
+   • 5-mer PCC           : 0.9733 ± 0.0024 (Var=0.000006, N=10)
+   • 6-mer PCC           : 0.9438 ± 0.0033 (Var=0.000011, N=10)
+
+------------------------------------------------------------------------------------------------------------------------
+Class_1
+------------------------------------------------------------------------------------------------------------------------
+   • Acc                 : 86.95% ± 0.79% (Var=0.000063, N=10)
+   • MAE                 : 0.1358 ± 0.0092 (Var=0.000085, N=10)
+   • MeanPred            : 0.9931 ± 0.0095 (Var=0.000090, N=10)
+   • GC Diff             : 0.0120 ± 0.0007 (Var=0.000000, N=10)
+   • Diversity           : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Novelty             : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Edit Distance       : 44.56 ± 0.06 (Var=0.003286, N=10)
+   • Bio Alignment       : 864.16% ± 6.21% (Var=0.003860, N=10)
+   • 4-mer PCC           : 0.9955 ± 0.0005 (Var=0.000000, N=10)
+   • 5-mer PCC           : 0.9890 ± 0.0005 (Var=0.000000, N=10)
+   • 6-mer PCC           : 0.9653 ± 0.0010 (Var=0.000001, N=10)
+
+------------------------------------------------------------------------------------------------------------------------
+Class_2
+------------------------------------------------------------------------------------------------------------------------
+   • Acc                 : 86.29% ± 0.75% (Var=0.000057, N=10)
+   • MAE                 : 0.1401 ± 0.0076 (Var=0.000058, N=10)
+   • MeanPred            : 2.0196 ± 0.0086 (Var=0.000074, N=10)
+   • GC Diff             : 0.0157 ± 0.0008 (Var=0.000001, N=10)
+   • Diversity           : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Novelty             : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Edit Distance       : 45.01 ± 0.09 (Var=0.007687, N=10)
+   • Bio Alignment       : 875.15% ± 9.08% (Var=0.008253, N=10)
+   • 4-mer PCC           : 0.9965 ± 0.0005 (Var=0.000000, N=10)
+   • 5-mer PCC           : 0.9912 ± 0.0007 (Var=0.000000, N=10)
+   • 6-mer PCC           : 0.9733 ± 0.0012 (Var=0.000001, N=10)
+
+------------------------------------------------------------------------------------------------------------------------
+Class_3
+------------------------------------------------------------------------------------------------------------------------
+   • Acc                 : 91.00% ± 0.73% (Var=0.000054, N=10)
+   • MAE                 : 0.0901 ± 0.0072 (Var=0.000052, N=10)
+   • MeanPred            : 3.0423 ± 0.0102 (Var=0.000105, N=10)
+   • GC Diff             : 0.0128 ± 0.0008 (Var=0.000001, N=10)
+   • Diversity           : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Novelty             : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Edit Distance       : 45.83 ± 0.06 (Var=0.003836, N=10)
+   • Bio Alignment       : 893.95% ± 7.54% (Var=0.005681, N=10)
+   • 4-mer PCC           : 0.9922 ± 0.0014 (Var=0.000002, N=10)
+   • 5-mer PCC           : 0.9871 ± 0.0014 (Var=0.000002, N=10)
+   • 6-mer PCC           : 0.9730 ± 0.0021 (Var=0.000004, N=10)
+
+------------------------------------------------------------------------------------------------------------------------
+Class_4
+------------------------------------------------------------------------------------------------------------------------
+   • Acc                 : 98.73% ± 0.19% (Var=0.000004, N=10)
+   • MAE                 : 0.0168 ± 0.0032 (Var=0.000010, N=10)
+   • MeanPred            : 3.9833 ± 0.0032 (Var=0.000010, N=10)
+   • GC Diff             : 0.0124 ± 0.0007 (Var=0.000001, N=10)
+   • Diversity           : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Novelty             : 1.0000 ± 0.0000 (Var=0.000000, N=10)
+   • Edit Distance       : 47.19 ± 0.09 (Var=0.007858, N=10)
+   • Bio Alignment       : 941.55% ± 11.86% (Var=0.014065, N=10)
+   • 4-mer PCC           : 0.9873 ± 0.0020 (Var=0.000004, N=10)
+   • 5-mer PCC           : 0.9860 ± 0.0021 (Var=0.000004, N=10)
+   • 6-mer PCC           : 0.9824 ± 0.0019 (Var=0.000003, N=10)
+
+========================================================================================================================
+[Saved Files]
+========================================================================================================================
+   Set-level raw summary      : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/wrc_10sets_set_level_summary_raw.csv
+   Set-level mean/std/var     : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/wrc_10sets_set_level_mean_std.csv
+   Class-level raw data       : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/wrc_10sets_class_level_raw.csv
+   Class-level mean/std/var   : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/wrc_10sets_class_level_mean_std.csv
+   Pretty final report        : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/wrc_10sets_final_pretty_report.txt
+   Pretty summary table       : /data/stu1/wrc3_pycharm_project/WRC_mask_diffusion/wrc_gen_all/optimized/results_try_10sets_new_eval_psednc6_same_rule/wrc_10sets_final_pretty_table.csv
+========================================================================================================================
