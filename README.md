@@ -34,37 +34,43 @@ For complete evaluation, install `biopython` and `Levenshtein` as well; `evaluat
 
 ## Usage
 
-Run the commands below from the `prediction_wrc_c_diffusion_optimized/` directory. Check the input, checkpoint, and output paths in each script before running it on a different machine.
-
 ### Datasets
 
-The classification dataset contains 63,468 promoter sequences grouped into five strength classes. The class-labeled sequences are stored in `dataset/wrc_class5_63468.txt`, and the merged data are stored in `dataset/merged_dataset63468.csv`. Prepare the five-fold datasets using:
+The dataset used by `DNPromDSC` comprises 63,468 natural 80-bp *Saccharomyces cerevisiae* promoter sequences with measured expression strengths. The sequences and continuous strength values are stored in `dataset/merged_dataset63468.csv`; the five-class labels are stored with the sequences in `dataset/wrc_class5_63468.txt`.
+
+Run `dataset/data_processed_5fold.py` to obtain five stratified classification folds in `dataset/wrc_processed_5fold/kfold5_new/`. Run `dataset/regression_63468_5fold.py` to obtain five continuous-strength folds in `dataset/wrc_regression_63468_5fold/` for DNABERT-2 regression training:
 
 ```bash
 python dataset/data_processed_5fold.py
 python dataset/regression_63468_5fold.py
 ```
 
-The processed datasets are stored in `dataset/wrc_processed_5fold/kfold5_new/` and `dataset/wrc_regression_63468_5fold/`, respectively.
-
 ### Model Training
 
-The promoter strength prediction models can be trained with:
+We define the promoter strength prediction model in `prediction/model_optimized_predict.py`, where:
+
+- The sequence feature extraction module uses convolutional layers and a Transformer encoder to process promoter sequences.
+- The feature-processing and fusion modules combine sequence representations with chaos game representation (CGR) and pseudo dinucleotide composition (PseDNC) features for strength-class prediction.
+
+Run `prediction/train_optimized_predict.py` to obtain five classification checkpoints (`best_f1.pth` through `best_f5.pth`) in its configured output directory. A separate DNABERT-2 regression model is defined in `prediction/model_dnabert2_mlp.py`. Run `prediction/train_DNABert2_MLP.py` to obtain `fold1/best_model.pth` through `fold5/best_model.pth` under `prediction/checkpoint_dnabert2/` for independent evaluation of designed promoters:
 
 ```bash
 python prediction/train_optimized_predict.py
 python prediction/train_DNABert2_MLP.py
 ```
 
-The conditional diffusion model can be trained with:
+Run `prior_condition/methods.py` with its required sequence-only classifier (`model_new_simple_gpt`) and five classifier checkpoints to obtain class-specific position weights and nucleotide preferences, including `class_position_weights_combined_5bins.npy` and `class_base_preference_from_mutagenesis.npy`. If these saved features are already available, they can be used directly. Run `Diffusion_to_optimized/train_diff_all.py` using the features and class-labeled sequences to obtain diffusion checkpoints (including `final.pt`) and `run_config.json` in its configured output directory:
 
 ```bash
+python prior_condition/methods.py
 python Diffusion_to_optimized/train_diff_all.py
 ```
 
 ### Model Testing
 
-Generate promoter sequences, optimize them, and evaluate the results using:
+Run `Diffusion_to_optimized/gen_all_10sets.py` using a trained diffusion checkpoint to obtain ten independently generated sets of promoters and their generation summaries. Run `Diffusion_to_optimized/optimized_all_10sets.py` using the diffusion checkpoint and five classification predictor checkpoints to obtain ten optimized sets and optimization summaries. The optimization script generates its own candidates; it does not use the output of `gen_all_10sets.py` as input.
+
+Run `Diffusion_to_optimized/evaluate_all_10sets.py` using the generated-sequence directory, DNABERT-2 model files, and five regression checkpoints to obtain predicted strengths, sequence metrics, and evaluation reports:
 
 ```bash
 python Diffusion_to_optimized/gen_all_10sets.py
@@ -72,4 +78,4 @@ python Diffusion_to_optimized/optimized_all_10sets.py
 python Diffusion_to_optimized/evaluate_all_10sets.py
 ```
 
-The repository structure shown does not yet include a separate test script for the prediction models. Their saved checkpoints are under `prediction/checkpoint_prediction/` and `prediction/checkpoint_dnabert2/`.
+Set the dataset, saved-feature, checkpoint, and output paths in these scripts to match your installation before running them. To regenerate the conditioning features, also provide `model_new_simple_gpt` and its sequence-only classifier checkpoints; they are not shown in the repository layout above. The classification training script saves `best_f*.pth`, while the provided prediction checkpoints are named `prediction_f*.pth`; verify the fold-to-file mapping before reuse. The repository does not currently include a separate test script for the prediction models.
