@@ -1,4 +1,4 @@
-# DNPromDSC: De Novo Promoter Design for Strength Control Using Conditional Diffusion and Sequence Optimization
+# DNPromDSC: *De Novo* Promoter Design for Strength Control Using Conditional Diffusion and Sequence Optimization
 
 ## Overview
 
@@ -17,7 +17,20 @@ The project includes the following directories and core files:
 
 ## System Requirements
 
-The project uses Python and PyTorch. Its preprocessing and prediction scripts also use NumPy, pandas, scikit-learn, SciPy, tqdm, and Transformers. Install a PyTorch build compatible with your system. The DNABERT-2 experiments require the model files in `prediction/DNABERT_2/`.
+`DNPromDSC` was implemented, trained, and tested using Python 3.8.20 and PyTorch 2.4.1 with CUDA 12.1 on an NVIDIA RTX 4090 GPU. The provided package list includes the following libraries used by the preprocessing, prediction, generation, and evaluation scripts:
+
+```text
+Python         3.8.20
+torch          2.4.1
+transformers   4.32.1
+scikit-learn   1.3.0
+pandas         2.0.3
+numpy          1.24.3
+tqdm           4.65.0
+scipy          1.11.1
+```
+
+For complete evaluation, install `biopython` and `Levenshtein` as well; `evaluate_all_10sets.py` uses them to calculate sequence alignment and edit-distance metrics. Their versions were not included in the provided package list. DNABERT-2 experiments require the local `bert_layers.py`, pretrained model and tokenizer files, and the corresponding trained checkpoints. Diffusion training also requires the saved class-position weights and base-preference arrays referenced in `train_diff_all.py`. Before running the scripts on another machine, update their configured data and checkpoint paths and select GPU indices available on that machine.
 
 ## Usage
 
