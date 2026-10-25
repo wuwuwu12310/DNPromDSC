@@ -8,7 +8,7 @@ The promoter strength prediction model combines raw sequence information with ch
 
 The overall framework of `DNPromDSC`  is shown in the following figure.
 
-![Overall framework of DNPromDSC](./DNPromDSC_framework.png)
+![Overall framework of DNPromDSC](./Model_architecture.png)
 
 ## Description
 
