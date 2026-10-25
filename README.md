@@ -6,6 +6,10 @@
 
 The promoter strength prediction model combines raw sequence information with chaos game representation (CGR) and pseudo dinucleotide composition (PseDNC) features to predict strength classes and extract class-specific sequence information. The conditional diffusion model uses this information to generate promoters for the desired strength class. The dynamic promoter optimization model then refines the generated sequences through local nucleotide mutation, masked sequence regeneration, and conditional diffusion sampling, with candidate selection based on predicted strength and sequence composition.
 
+The overall framework of `DNPromDSC`  is shown in the following figure.
+
+
+
 ## Description
 
 The project includes the following directories and core files:
