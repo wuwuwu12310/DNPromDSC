@@ -2,9 +2,9 @@
 
 ## Overview
 
-`DNPromDSC` is a deep learning framework for the de novo design of 80-bp *Saccharomyces cerevisiae* promoter sequences with desired strength classes. It integrates promoter strength prediction, conditional denoising diffusion, and dynamic promoter optimization to generate promoters with controlled strengths while maintaining natural sequence characteristics.
+`DNPromDSC` is a novel *de novo* promoter design approach of strength control based on a conditional diffusion model and sequence optimization. It is used to design *Saccharomyces cerevisiae* promoters with specified strength classes.
 
-The promoter strength prediction model combines raw sequence information with chaos game representation (CGR) and pseudo dinucleotide composition (PseDNC) features to predict strength classes and extract class-specific sequence information. The conditional diffusion model uses this information to generate promoters for the desired strength class. The dynamic promoter optimization model then refines the generated sequences through local nucleotide mutation, masked sequence regeneration, and conditional diffusion sampling, with candidate selection based on predicted strength and sequence composition.
+The architecture of `DNPromDSC` consists of a promoter strength prediction model, a conditional diffusion model, and a promoter sequence optimization algorithm. The strength prediction model integrates statistical and physicochemical feature processing with feature extraction by deep learning networks to assist the conditional generation and optimization processes. The conditional diffusion model employs the trained strength prediction model to provide conditional sequence features, integrates the Transformer encoder and U-Net through the cross-attention mechanism for conditional noise prediction, and is trained by combining position-weighted denoising and adjacent-class competitive losses. The sequence optimization algorithm is a modified reinforcement learning-based evolution optimization process, which integrates the trained strength prediction model for evaluations and uses the trained conditional diffusion model for regeneration actions.
 
 The overall framework of `DNPromDSC`  is shown in the following figure.
 
@@ -12,12 +12,23 @@ The overall framework of `DNPromDSC`  is shown in the following figure.
 
 ## Description
 
-The project includes the following directories and core files:
+The project contains four main folders and several core files, which are briefly described as follows.
 
-- `dataset/` contains the promoter data, five-fold datasets, and preprocessing scripts `data_processed_5fold.py` and `regression_63468_5fold.py`.
-- `prediction/` contains the promoter strength prediction models and their training scripts: `model_optimized_predict.py`, `train_optimized_predict.py`, `model_dnabert2_mlp.py`, and `train_DNABert2_MLP.py`. Its `checkpoint_prediction/` and `checkpoint_dnabert2/` directories contain the corresponding checkpoints.
-- `prior_condition/` contains `methods.py`, `model_optimized_predict.py`, and saved weights for extracting class-specific conditioning information from the prediction model.
-- `Diffusion_to_optimized/` contains `train_diff_all.py` for diffusion training, `gen_all_10sets.py` for sequence generation, `optimized_all_10sets.py` for sequence optimization, and `evaluate_all_10sets.py` for evaluation. It also contains the predictor model definitions and the `results_diff/` directory.
+- The folder `dataset` contains the promoter datasets and five-fold datasets.
+- The files `dataset/data_processed_5fold.py` and `dataset/regression_63468_5fold.py` are the data preprocessing scripts.
+- The folder `prediction` contains the promoter strength prediction models and training scripts.
+- The files `prediction/model_optimized_predict.py` and `prediction/train_optimized_predict.py` define and train the promoter strength prediction model.
+- The files `prediction/model_dnabert2_mlp.py` and `prediction/train_DNABert2_MLP.py` define and train the DNABERT-2-based model.
+- The folders `prediction/checkpoint_prediction` and `prediction/checkpoint_dnabert2` contain the corresponding model checkpoints.
+- The folder `prior_condition` contains the files and saved weights used to extract class-specific conditioning information from the prediction model.
+- The folder `Diffusion_to_optimized` contains the diffusion training, sequence generation, optimization, and evaluation scripts.
+- The file `Diffusion_to_optimized/train_diff_all.py` is the diffusion training script.
+- The file `Diffusion_to_optimized/gen_all_10sets.py` is the sequence generation script.
+- The file `Diffusion_to_optimized/optimized_all_10sets.py` is the sequence optimization script.
+- The file `Diffusion_to_optimized/evaluate_all_10sets.py` is the evaluation script.
+- The folder `Diffusion_to_optimized/results_diff` contains the diffusion training results.
+
+
 
 ## System Requirements
 
@@ -40,26 +51,32 @@ DNABERT-2 experiments require the pretrained model and tokenizer files in `predi
 
 ## Usage
 
-### Datasets
+## 1. Dataset and Data Preprocessing
 
-The dataset contains 63,468 natural 80-bp *Saccharomyces cerevisiae* promoter sequences with measured strengths. The continuous-strength data are stored in `dataset/merged_dataset63468.csv`, and the five-class labels are stored in `dataset/wrc_class5_63468.txt`. Run `dataset/data_processed_5fold.py` and `dataset/regression_63468_5fold.py` to prepare the classification and regression folds, respectively.
+The folder `dataset` contains 63,468 natural 80-bp *Saccharomyces cerevisiae* promoter sequences with measured strengths. The file `merged_dataset63468.csv` contains the continuous-strength data, and `wrc_class5_63468.txt` contains the five-class labels.
 
-### Model Training
+Run `dataset/data_processed_5fold.py` and `dataset/regression_63468_5fold.py` to prepare the classification and regression folds, respectively.
 
-The promoter strength prediction model is defined in `prediction/model_optimized_predict.py`, where:
+## 2. Promoter Strength Prediction Model Training
 
-- Convolutional layers and a Transformer encoder extract sequence features.
-- Chaos game representation (CGR) and pseudo dinucleotide composition (PseDNC) features are combined with sequence features to predict strength classes.
+Run `prediction/train_optimized_predict.py` to train the five-fold promoter strength classification model defined in `prediction/model_optimized_predict.py`. This model combines sequence features with chaos game representation (CGR) and pseudo dinucleotide composition (PseDNC) features.
 
-Run `prediction/train_optimized_predict.py` to train the five-fold classification model. Run `prediction/train_DNABert2_MLP.py` to train the DNABERT-2 regression model used for independent evaluation. Run `prior_condition/methods.py` with `prior_condition/model_optimized_predict.py` to obtain class-specific position weights and nucleotide preferences.
+Run `prediction/train_DNABert2_MLP.py` to train the DNABERT-2 regression model used for independent evaluation.
 
-The conditional denoising diffusion model is defined in `Diffusion_to_optimized/train_diff_all.py`, where:
+## 3. Conditional Diffusion Model Training
 
-- A Transformer encoder and cross-attention incorporate class-specific sequence information into the U-Net.
-- Position-weighted denoising and an adjacent-class competitive loss support strength-controlled generation.
+Run `prior_condition/methods.py` with `prior_condition/model_optimized_predict.py` and the trained classification model to extract class-specific position weights and nucleotide preferences.
 
-Run `Diffusion_to_optimized/train_diff_all.py` with the class-specific features to train the conditional diffusion model.
+Run `Diffusion_to_optimized/train_diff_all.py` with these class-specific features to train the conditional diffusion model. The model incorporates the features into a U-Net through a Transformer encoder and cross-attention, and uses position-weighted denoising and adjacent-class competitive losses.
 
-### Model Testing
+## 4. Promoter Sequence Generation
 
-Run `Diffusion_to_optimized/gen_all_10sets.py` with a trained diffusion checkpoint to generate promoter sequences for the five strength classes. Run `Diffusion_to_optimized/optimized_all_10sets.py` with the diffusion and classification checkpoints to obtain optimized promoters. Run `Diffusion_to_optimized/evaluate_all_10sets.py` with the DNABERT-2 regression checkpoints to evaluate the designed sequences. Set the data and checkpoint paths in each script to match your installation.
+Run `Diffusion_to_optimized/gen_all_10sets.py` with a trained diffusion checkpoint to generate promoter sequences for the five target strength classes.
+
+## 5. Promoter Sequence Optimization
+
+Run `Diffusion_to_optimized/optimized_all_10sets.py` with the trained diffusion and classification models to optimize the generated promoter sequences.
+
+## 6. In Silico Validation
+
+Run `Diffusion_to_optimized/evaluate_all_10sets.py` with the trained DNABERT-2 regression model to evaluate the designed promoter sequences.
